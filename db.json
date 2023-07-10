@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Rehana",
+      "lastname": "S",
+      "email": "sathickshakila785@gmail.com",
+      "gender": "Female",
+      "password": 3456,
+      "date": "13-08-2002"
+    },
+    {
+      "id": 3,
+      "firstname": "",
+      "lastname": "",
+      "email": "AkbarBashaK.M@yhoo.com",
+      "password": "9361617017",
+      "date": "",
+      "active": true
+    },
+    {
+      "id": 5,
+      "firstname": "Mohamed",
+      "lastname": "Riyaz",
+      "email": "AkbarBasha@yhoo.com",
+      "password": "tyuuuwwwwww",
+      "date": "2023-03-23T11:42",
+      "active": true
+    },
+    {
+      "id": 6,
+      "firstname": "",
+      "lastname": "",
+      "email": "AkbarBashaK.M@yhoo.com",
+      "password": "34577",
+      "date": "",
+      "active": true
+    }
+  ]
+}

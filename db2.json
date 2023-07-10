@@ -1,0 +1,16 @@
+{
+  "products": [
+    {
+      "images": "C:\\fakepath\\Akbar.jpg",
+      "title": "Computer",
+      "price": 237,
+      "feacture": "ghh",
+      "feacture2": "Black Clor",
+      "feacture3": "Best Speed",
+      "year": "2 year",
+      "date": "12/12/2023",
+      "active": true,
+      "id": 1
+    }
+  ]
+}

@@ -1,0 +1,728 @@
+
+
+login page
+import React, { useState } from "react";
+
+// Material UI Imports
+import {
+  TextField,
+  InputAdornment,
+  FormControl,
+  InputLabel,
+  IconButton,
+  Button,
+  Input,
+  Checkbox,
+  Alert,
+  Stack,
+} from "@mui/material";
+
+// Material UI Icon Imports
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import LoginIcon from "@mui/icons-material/Login";
+
+// Email Validation
+const isEmail = (email) =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
+export default function Home() {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  //Inputs
+  const [emailInput, setEmailInput] = useState();
+  const [passwordInput, setPasswordInput] = useState();
+  const [rememberMe, setRememberMe] = useState();
+
+  // Inputs Errors
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  // Overall Form Validity
+  const [formValid, setFormValid] = useState();
+  const [success, setSuccess] = useState();
+
+  // Handles Display and Hide Password
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  // Label for Checkbox
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
+  // Validation for onBlur Email
+  const handleEmail = () => {
+    console.log(isEmail(emailInput));
+    if (!isEmail(emailInput)) {
+      setEmailError(true);
+      return;
+    }
+
+    setEmailError(false);
+  };
+
+  // Validation for onBlur Password
+  const handlePassword = () => {
+    if (
+      !passwordInput ||
+      passwordInput.length < 5 ||
+      passwordInput.length > 20
+    ) {
+      setPasswordError(true);
+      return;
+    }
+
+    setPasswordError(false);
+  };
+
+  //handle Submittion
+  const handleSubmit = () => {
+    setSuccess(null);
+    //First of all Check for Errors
+
+    // If Email error is true
+    if (emailError || !emailInput) {
+      setFormValid("Email is Invalid. Please Re-Enter");
+      return;
+    }
+
+    // If Password error is true
+    if (passwordError || !passwordInput) {
+      setFormValid(
+        "Password is set btw 5 - 20 characters long. Please Re-Enter"
+      );
+      return;
+    }
+    setFormValid(null);
+
+    // Proceed to use the information passed
+    console.log("Email : " + emailInput);
+    console.log("Password : " + passwordInput);
+    console.log("Remember : " + rememberMe);
+
+    //Show Successfull Submittion
+    setSuccess("Form Submitted Successfully");
+  };
+
+  return (
+    <div>
+      <div style={{ marginTop: "5px" }}>
+        <TextField
+          label="Email Address"
+          fullWidth
+          error={emailError}
+          id="standard-basic"
+          variant="standard"
+          sx={{ width: "100%" }}
+          value={emailInput}
+          InputProps={{}}
+          size="small"
+          onBlur={handleEmail}
+          onChange={(event) => {
+            setEmailInput(event.target.value);
+          }}
+        />
+      </div>
+      <div style={{ marginTop: "5px" }}>
+        <FormControl sx={{ width: "100%" }} >
+          <InputLabel
+            error={passwordError}
+            htmlFor="standard-adornment-password"
+          >
+            Password
+          </InputLabel>
+          <Input
+            error={passwordError}
+            onBlur={handlePassword}
+            id="standard-adornment-password"
+            type={showPassword ? "text" : "password"}
+            onChange={(event) => {
+              setPasswordInput(event.target.value);
+            }}
+            value={passwordInput}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      </div>
+
+      <div style={{ fontSize: "10px" }}>
+        <Checkbox
+          {...label}
+          size="small"
+          onChange={(event) => setRememberMe(event.target.checked)}
+        />
+        Remember Me
+      </div>
+
+      <div style={{ marginTop: "10px" }}>
+        <Button
+          variant="contained"
+          fullWidth
+          startIcon={<LoginIcon />}
+          onClick={handleSubmit}
+        >
+          LOGIN
+        </Button>
+      </div>
+
+      {/* Show Form Error if any */}
+      {formValid && (
+        <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+          <Alert severity="error" size="small">
+            {formValid}
+          </Alert>
+        </Stack>
+      )}
+
+      {/* Show Success if no issues */}
+      {success && (
+        <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+          <Alert severity="success" size="small">
+            {success}
+          </Alert>
+        </Stack>
+      )}
+
+      <div style={{ marginTop: "7px", fontSize: "10px" }} margin="left">
+        <a>Forgot Password</a>
+        <br />
+        Do you have an account ?{" "}
+        <small style={{ textDecoration: "underline", color: "blue" }}>
+          Sign Up
+        </small>
+      </div>
+    </div>
+  );
+}
+
+sign page
+import React,{useState} from "react";
+import {
+    TextField,
+    InputAdornment,
+    FormControl,
+    InputLabel,
+    IconButton,
+    Button,
+    Input,
+    Checkbox,
+    Alert,
+    Stack,
+  } from "@mui/material";
+  
+  // Material UI Icon Imports
+  import Visibility from "@mui/icons-material/Visibility";
+  import VisibilityOff from "@mui/icons-material/VisibilityOff";
+  import LoginIcon from "@mui/icons-material/Login";
+  
+  // Validations
+  
+  // Email Validation
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+  
+  export default function Login() {
+    const [showPassword, setShowPassword] = React.useState(false);
+  
+    //Inputs
+    const [usernameInput, setUsernameInput] = useState();
+    const [emailInput, setEmailInput] = useState();
+    const [passwordInput, setPasswordInput] = useState();
+  
+    // Inputs Errors
+    const [usernameError, setUsernameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+  
+    // Overall Form Validity
+    const [formValid, setFormValid] = useState();
+    const [success, setSuccess] = useState();
+  
+    // Handles Display and Hide Password
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
+  
+    // Label for Checkbox
+    const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  
+    // Validation for onBlur Username
+    const handleUsername = () => {
+      if (!usernameInput) {
+        setUsernameError(true);
+        return;
+      }
+  
+      setUsernameError(false);
+    };
+  
+    // Validation for onBlur Email
+    const handleEmail = () => {
+      console.log(isEmail(emailInput));
+      if (!isEmail(emailInput)) {
+        setEmailError(true);
+        return;
+      }
+  
+      setEmailError(false);
+    };
+  
+    // Validation for onBlur Password
+    const handlePassword = () => {
+      if (
+        !passwordInput ||
+        passwordInput.length < 5 ||
+        passwordInput.length > 20
+      ) {
+        setPasswordError(true);
+        return;
+      }
+  
+      setPasswordError(false);
+    };
+  
+    //handle Submittion
+    const handleSubmit = () => {
+      setSuccess(null);
+      //First of all Check for Errors
+  
+      // IF username error is true
+      if (usernameError || !usernameInput) {
+        setFormValid(
+          "Username is set btw 5 - 15 characters long. Please Re-Enter"
+        );
+        return;
+      }
+  
+      // If Email error is true
+      if (emailError || !emailInput) {
+        setFormValid("Email is Invalid. Please Re-Enter");
+        return;
+      }
+  
+      // If Password error is true
+      if (passwordError || !passwordInput) {
+        setFormValid(
+          "Password is set btw 5 - 20 characters long. Please Re-Enter"
+        );
+        return;
+      }
+      setFormValid(null);
+  
+      // Proceed to use the information passed
+      console.log("Username : " + usernameInput);
+      console.log("Email : " + emailInput);
+      console.log("Password : " + passwordInput);
+  
+      //Show Successfull Submittion
+      setSuccess("Form Submitted Successfully");
+    };
+  
+    return (
+      <div>
+        <div style={{ marginTop: "10px" }}>
+          <TextField
+            error={usernameError}
+            label="Username"
+            id="standard-basic"
+            variant="standard"
+            sx={{ width: "100%" }}
+            size="small"
+            value={usernameInput}
+            InputProps={{}}
+            onChange={(event) => {
+              setUsernameInput(event.target.value);
+            }}
+            onBlur={handleUsername}
+          />
+        </div>
+  
+        <div style={{ marginTop: "5px" }}>
+          <TextField
+            label="Email Address"
+            fullWidth
+            error={emailError}
+            id="standard-basic"
+            variant="standard"
+            sx={{ width: "100%" }}
+            value={emailInput}
+            InputProps={{}}
+            size="small"
+            onBlur={handleEmail}
+            onChange={(event) => {
+              setEmailInput(event.target.value);
+            }}
+          />
+        </div>
+        <div style={{ marginTop: "5px" }}>
+          <FormControl sx={{ width: "100%" }} variant="standard">
+            <InputLabel
+              error={passwordError}
+              htmlFor="standard-adornment-password"
+            >
+              Password
+            </InputLabel>
+            <Input
+              error={passwordError}
+              onBlur={handlePassword}
+              id="standard-adornment-password"
+              type={showPassword ? "text" : "password"}
+              onChange={(event) => {
+                setPasswordInput(event.target.value);
+              }}
+              value={passwordInput}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        </div>
+  
+        <div style={{ marginTop: "10px" }}>
+          <Button
+            variant="contained"
+            fullWidth
+            startIcon={<LoginIcon />}
+            onClick={handleSubmit}
+          >
+            LOGIN
+          </Button>
+        </div>
+  
+        {/* Show Form Error if any */}
+        {formValid && (
+          <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+            <Alert severity="error" size="small">
+              {formValid}
+            </Alert>
+          </Stack>
+        )}
+  
+        {/* Show Success if no issues */}
+        {success && (
+          <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+            <Alert severity="success" size="small">
+              {success}
+            </Alert>
+          </Stack>
+        )}
+  
+        <div style={{ marginTop: "7px", fontSize: "10px" }} margin="left">
+          <a>Forgot Password</a>
+          <br />
+          Do you have an account ?{" "}
+          <small style={{ textDecoration: "underline", color: "blue" }}>
+            Sign Up
+          </small>
+        </div>
+      </div>
+    );
+  }
+
+  app js
+
+import "./App.css";
+
+import Chip from "@mui/material/Chip";
+import FaceIcon from "@mui/icons-material/Face";
+import Paper from "@mui/material/Paper";
+import LockIcon from "@mui/icons-material/Lock";
+
+import Switch from "@mui/material/Switch";
+import { useState } from "react";
+import Login from "./Product Crud/Home";
+import Signup from "./Product Crud/Home2";
+
+function App() {
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  return (
+    <div className="App">
+      <Paper elevation={3} style={{ padding: "10px", paddingBottom: "50px" }}>
+        <div align="center">
+          {checked ? (
+            <Chip
+              icon={<LockIcon />}
+              label="Log In"
+              variant="outlined"
+              color="info"
+            />
+          ) : (
+            <Chip
+              icon={<FaceIcon />}
+              label="Sign Up"
+              variant="outlined"
+              color="info"
+            />
+          )}
+          <br />
+
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </div>
+
+        {checked ? <Login /> : <Signup />}
+      </Paper>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+import React, { useState } from 'react'
+import{ TextField,Typography,Checkbox,Card, CardContent,Grid,Button} from '@mui/material';
+import {Link,useNavigate} from 'react-router-dom'
+import './Style.css'
+
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import GitHubIcon from '@mui/icons-material/GitHub';
+
+
+
+const Sign =() => {
+    // const [firstname,setFirstName]=useState();
+    // const [lastname,setLastName]=useState();
+    // const [email,setEmail]=useState();
+    // const [password,setPassword]=useState();
+    const[id,idchange]=useState("");
+    const[firstname,firstnameChange]=useState("");
+    const[lastname,lastnameChange]=useState("");  
+    const[email,emailChange]=useState("");
+    const[password,passwordChange]=useState("");
+    const[date,dateChange]=useState("");
+     const[active,activeChange]=useState(true);
+      const[validation,valChange]=useState(false);
+      
+  const navigate=useNavigate();
+  
+      const handlesubmit=(e)=>{
+        e.preventDefault();
+        const userdata={id,firstname,lastname,email,password,date,active};
+         
+        fetch("http://localhost:4000/users",{
+          method:'POST',
+          headers:{"content-type":"application/json"},
+          body:JSON.stringify(userdata)
+        }).then((res)=>{
+          alert('Saved successfully.')
+          navigate('/create/users/');
+        }).catch((err)=>{
+          console.log(err.message)
+        })
+    }
+  
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+     const [isSignup,setisSignup]=useState(false)
+     console.log(isSignup);
+return (
+ <>
+<div class="fronend"> 
+<Card style={{ maxWidth: 400, padding: "20px 5px", margin: "0 auto" }}
+       borderRadious={5}
+       boxShadow={"5px 5px 10px #ccc"}
+           sx={{
+             ":hover":{
+              boxShadow:'10px 10px 20px #ccc',
+           },
+         }}
+     >
+
+          <CardContent>
+  <form onSubmit={handlesubmit}>
+        
+            <div class="d-flex flex-row bd-highlight  mb-3">
+        <Button onClick={()=>setisSignup(!isSignup)}
+          variant='contained' 
+    sx={{marginRight:16,marginTop:3,borderRadius:3,":hover":{
+            boxShadow:"10px 10px 20px #blue",
+           },
+          }}
+        >
+       Sign IN
+       </Button>
+       
+       <Button onClick={()=>setisSignup(!isSignup)}
+         variant='contained' 
+    sx={{marginLeft:8,marginTop:3,borderRadius:3,":hover":{
+            boxShadow:"10px 10px 20px #blue",
+           },
+ }}
+        >
+          Login
+  </Button>
+       
+  </div>
+
+           <Typography
+       marginTop={1}
+       display="flex"
+       justifyContent="center"
+       alignItems="center"
+     >Sign In With:
+      </Typography>
+      
+      <Typography
+      marginTop={1}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      >
+        <h4>
+          <FacebookIcon/>
+          <GoogleIcon/>
+          <TwitterIcon/>
+          <GitHubIcon/>
+        </h4>
+      </Typography>
+
+      <Typography
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginTop={1}
+      >
+        Or:
+      </Typography>
+
+  {isSignup &&  <TextField 
+type={'text'}
+variant='outlined'
+fullWidth required
+value={id} disabled="disabled"
+/> }
+    
+  <Grid container spacing={1} marginTop={1}>
+   <Grid xs={12} sm={6} item>
+   {isSignup && <TextField placeholder="Enter first name" label="First Name"   
+      onMouseDown={e=>valChange(true)}  value={firstname}
+      onChange={e=>firstnameChange(e.target.value)}     variant="outlined" 
+      fullWidth required />
+    }     {firstname.length==0 && validation && <span className="text-danger"></span>}</Grid>
+      <Grid xs={12} sm={6} item>
+      {isSignup &&  <TextField placeholder="Enter last name" label="Last Name" variant="outlined" fullWidth required 
+     value={lastname}    onMouseDown={e=>valChange(true)}
+     onChange={e=>lastnameChange(e.target.value)}  />
+}    {lastname.length==0 && validation && <span className="text-danger"></span>}</Grid>  
+  
+
+<Grid item xs={12}> <TextField 
+      type={'email'} 
+      variant='outlined' 
+   label="Email"  
+   placeholder="Enter Email" 
+   fullWidth required 
+   value={email}    onMouseDown={e=>valChange(true)}
+   onChange={e=>emailChange(e.target.value)} />
+    </Grid>
+   
+   {isSignup &&<div class="d-flex flex-row bd-highlight  mb-3">
+Gender:<Checkbox {...label} defaultChecked size="small"/>
+<Typography marginTop={1}  checked={active} onChange={e=>activeChange(e.target.checked)}>Male</Typography>  
+
+<Checkbox {...label}  size="small"/>
+<Typography marginTop={1}  checked={active} onChange={e=>activeChange(e.target.checked)}>FeMale</Typography>  
+
+
+<Checkbox {...label}  size="small"/>
+<Typography marginTop={1}  checked={active} onChange={e=>activeChange(e.target.checked)}>Other</Typography>  
+
+</div>}
+
+<Grid item xs={12}><TextField
+       type={'password'} 
+       variant='outlined'
+       label="Password"  
+      placeholder='Enter Password' fullWidth required
+      value={password} onChange={(e)=> passwordChange(e.target.value)}/></Grid>
+
+
+<Grid item xs={12}>{isSignup &&<TextField
+      type={'password'} 
+       variant='outlined'
+       label="Repeat Password"  
+      placeholder=' Enter Password' fullWidth required 
+      value={password} onChange={(e)=> passwordChange(e.target.value)}/>}</Grid>
+
+     <Grid item xs={12}>
+    {isSignup && <TextField variant="outlined"type={"datetime-local"}  
+    checked={date} onChange={e=>dateChange(e.target.checked)}/>}
+     </Grid>
+  </Grid>  
+ 
+  <div class="d-flex flex-row bd-highlight  mb-3">
+
+<Checkbox {...label} defaultChecked size="small"
+   />
+     <Typography
+     marginTop={1}
+     marginRight={4}
+     checked={active} onChange={e=>activeChange(e.target.checked)}
+      >
+             {isSignup?"Remember Me":"I have read And agree to the terms "}
+   </Typography>
+     
+
+{isSignup &&<Button 
+      sx={{borderRadius:3,color:"blue"}}
+      color="warning">
+  Forget Password ?
+  </Button>
+}
+     </div> 
+
+     <Button 
+      sx={{marginLeft:17,borderRadius:3,  display:"flex",justifyContent:"center",alignItems:"center"
+    }}
+      variant='contained' 
+      color="warning">
+       {isSignup?"Login":"Sumbit"}
+  </Button>
+
+ <Button sx={{marginLeft:10,marginTop:2}}
+ onClick={()=>setisSignup(!isSignup)}>Not a member?{isSignup?"":"Register"}</Button>
+             </form>
+
+             </CardContent>
+
+        </Card>
+</div>    
+ </>
+  )
+
+}
+
+export default Sign
+
+
